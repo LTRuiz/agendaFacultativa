@@ -1,4 +1,4 @@
-# 🎓 UniAgenda
+# 🎓 Agenda Semanal Facultad
 
 Agenda universitaria personal construida con **Next.js 15 + App Router**.  
 Diseñada para hacer seguimiento de clases, parciales, tareas y cumplir la meta de **35 horas semanales de estudio** (sin contar las horas de cursada).
