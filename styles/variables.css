@@ -1,0 +1,44 @@
+/* ─── DESIGN TOKENS ──────────────────────────────────────────────────────── */
+:root {
+  /* Fondos */
+  --color-bg:        #020817;
+  --color-surface:   #0f172a;
+  --color-elevated:  #1e293b;
+  --color-border:    #1e293b;
+  --color-border-md: #334155;
+
+  /* Texto */
+  --color-text:      #f1f5f9;
+  --color-text-soft: #94a3b8;
+  --color-muted:     #64748b;
+  --color-dim:       #475569;
+
+  /* Marca / acento */
+  --color-accent:    #f59e0b;
+  --color-accent-2:  #ea580c;
+
+  /* Semánticos */
+  --color-success:   #22c55e;
+  --color-warning:   #f59e0b;
+  --color-danger:    #ef4444;
+  --color-info:      #3b82f6;
+
+  /* Materias */
+  --color-asi:       #4ade80;   /* Análisis de Sistemas de Información */
+  --color-fis:       #93c5fd;   /* Física II */
+  --color-com:       #f0abfc;   /* Comunicación de Datos */
+  --color-mat:       #cbd5e1;   /* Análisis Matemático II */
+
+  /* Layout */
+  --topbar-height:   60px;
+  --sidebar-width:   196px;
+  --radius-sm:       6px;
+  --radius-md:       10px;
+  --radius-lg:       14px;
+  --radius-xl:       16px;
+
+  /* Transiciones */
+  --transition-fast: all 0.15s ease;
+  --transition-mid:  all 0.25s ease;
+  --easing-spring:   cubic-bezier(.4, 0, .2, 1);
+}
