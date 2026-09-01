@@ -35,36 +35,37 @@ const NAV = [
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 export default function Page() {
-  const [tab, setTab] = useState("hoy");
-  const [parciales, setParciales] = useState(() => {
-    if (typeof window === "undefined") return initialParciales;
-    const saved = localStorage.getItem("ua_parciales");
-    return saved ? JSON.parse(saved) : initialParciales;
-  });
-  const [tareas, setTareas] = useState(() => {
-    if (typeof window === "undefined") return initialTareas;
-    const saved = localStorage.getItem("ua_tareas");
-    return saved ? JSON.parse(saved) : initialTareas;
-  });
-  const [estudio, setEstudio] = useState(() => {
-    if (typeof window === "undefined") return initialEstudio;
-    const saved = localStorage.getItem("ua_estudio");
-    return saved ? JSON.parse(saved) : initialEstudio;
-  });
+  const [tab,      setTab]      = useState("hoy");
+  const [mounted,  setMounted]  = useState(false);
+  const [parciales, setParciales] = useState(initialParciales);
+  const [tareas,    setTareas]    = useState(initialTareas);
+  const [estudio,   setEstudio]   = useState(initialEstudio);
 
-  useEffect(() => { localStorage.setItem("ua_parciales", JSON.stringify(parciales)); }, [parciales]);
-  useEffect(() => { localStorage.setItem("ua_tareas",    JSON.stringify(tareas));    }, [tareas]);
-  useEffect(() => { localStorage.setItem("ua_estudio",   JSON.stringify(estudio));   }, [estudio]);
+  useEffect(() => {
+    const p = localStorage.getItem("ua_parciales");
+    const t = localStorage.getItem("ua_tareas");
+    const e = localStorage.getItem("ua_estudio");
+    if (p) setParciales(JSON.parse(p));
+    if (t) setTareas(JSON.parse(t));
+    if (e) setEstudio(JSON.parse(e));
+    setMounted(true);
+  }, []);
 
-  const total = getTotalEstudio(estudio);
+  // Guardá cambios solo después de montar
+  useEffect(() => { if (mounted) localStorage.setItem("ua_parciales", JSON.stringify(parciales)); }, [parciales, mounted]);
+  useEffect(() => { if (mounted) localStorage.setItem("ua_tareas",    JSON.stringify(tareas));    }, [tareas,    mounted]);
+  useEffect(() => { if (mounted) localStorage.setItem("ua_estudio",   JSON.stringify(estudio));   }, [estudio,   mounted]);
+
+  const total      = getTotalEstudio(estudio);
   const pendientes = tareas.filter((t) => !t.completada).length;
-  const parcCerca = parciales.filter((p) => getDiasRestantes(p.fecha) <= 7 && p.estado !== "aprobado").length;
-  const pct = Math.min(100, (total / META_HORAS_SEMANALES) * 100);
-  const metaColor = pct >= 100 ? "var(--color-success)" : pct >= 60 ? "var(--color-warning)" : "var(--color-danger)";
+  const parcCerca  = parciales.filter((p) => getDiasRestantes(p.fecha) <= 7 && p.estado !== "aprobado").length;
+  const pct        = Math.min(100, (total / META_HORAS_SEMANALES) * 100);
+  const metaColor  = pct >= 100 ? "var(--color-success)" : pct >= 60 ? "var(--color-warning)" : "var(--color-danger)";
 
   const currentNav = NAV.find((n) => n.id === tab);
-  
   const HeaderIcon = currentNav ? ICON_MAP[currentNav.iconId] : null;
+
+  if (!mounted) return null;
 
   return (
     <>

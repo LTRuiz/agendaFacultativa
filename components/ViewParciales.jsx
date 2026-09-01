@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { MATERIAS_COLORS } from "@/lib/data";
-import { getDiasRestantes } from "@/lib/utils";
+import { getDiasRestantes, parseFecha } from "@/lib/utils";
 import { MateriaBadge } from "@/components/ui";
 
 const ESTADO_CONFIG = {
@@ -94,7 +94,7 @@ export default function ViewParciales({ parciales, setParciales }) {
                   <span style={{ fontSize: 11, background: "var(--color-elevated)", color: "var(--color-text-soft)", padding: "2px 8px", borderRadius: 4, fontWeight: 600 }}>{p.tipo}</span>
                 </div>
                 <div style={{ fontSize: 11, color: "var(--color-muted)", marginBottom: 3 }}>
-                  📅 {new Date(p.fecha).toLocaleDateString("es-AR", { weekday: "short", day: "numeric", month: "long" })}
+                  📅 {parseFecha(p.fecha).toLocaleDateString("es-AR", { weekday: "short", day: "numeric", month: "long" })}
                 </div>
                 {p.temario && <div style={{ fontSize: 11, color: "var(--color-dim)" }}>📚 {p.temario}</div>}
               </div>

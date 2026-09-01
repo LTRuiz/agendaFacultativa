@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { MATERIAS_COLORS } from "@/lib/data";
-import { getDiasRestantes } from "@/lib/utils";
+import { getDiasRestantes, parseFecha } from "@/lib/utils";
 import { MateriaBadge, PrioridadBadge, StatCard } from "@/components/ui";
 
 export default function ViewTareas({ tareas, setTareas }) {
@@ -111,7 +111,7 @@ export default function ViewTareas({ tareas, setTareas }) {
                 {t.completada ? "✓" : d <= 0 ? "¡Venció!" : d === 1 ? "Mañana" : `${d}d`}
               </div>
               <div style={{ fontSize: 10, color: "var(--color-dim)" }}>
-                {new Date(t.fechaEntrega).toLocaleDateString("es-AR")}
+                {parseFecha(t.fechaEntrega).toLocaleDateString("es-AR")}
               </div>
             </div>
 

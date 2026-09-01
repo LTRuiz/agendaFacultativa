@@ -1,12 +1,12 @@
 "use client";
 import { MATERIAS_COLORS } from "@/lib/data";
-import { getDiasRestantes, getTodayName, getHorasDia, getTotalEstudio } from "@/lib/utils";
+import { getDiasRestantes, getTodayName, getHorasDia, getTotalEstudio, parseFecha } from "@/lib/utils";
 import { MateriaBadge, ProgressBar } from "@/components/ui";
 
 export default function ViewHoy({ clases, parciales, tareas, estudio }) {
-  const today      = getTodayName();
+  const today       = getTodayName();
   const diasValidos = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
-  const displayDay = diasValidos.includes(today) ? today : "Lunes";
+  const displayDay  = diasValidos.includes(today) ? today : "Lunes";
 
   const clasesHoy      = clases.filter((c) => c.dia === displayDay);
   const horasHoy       = getHorasDia(estudio, displayDay);
@@ -76,7 +76,7 @@ export default function ViewHoy({ clases, parciales, tareas, estudio }) {
             <div style={{ color: "var(--color-border-md)", fontSize: 13, textAlign: "center", padding: "20px 0" }}>Sin parciales en 14 días</div>
           )}
           {parcialesCerca.map((p) => {
-            const d = getDiasRestantes(p.fecha);
+            const d      = getDiasRestantes(p.fecha);
             const urgent = d <= 5;
             return (
               <div key={p.id} style={{
@@ -95,7 +95,9 @@ export default function ViewHoy({ clases, parciales, tareas, estudio }) {
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: 12, fontWeight: 600, color: "var(--color-text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.materia}</div>
-                  <div style={{ fontSize: 10, color: "var(--color-muted)" }}>{p.tipo} · {new Date(p.fecha).toLocaleDateString("es-AR")}</div>
+                  <div style={{ fontSize: 10, color: "var(--color-muted)" }}>
+                    {p.tipo} · {parseFecha(p.fecha).toLocaleDateString("es-AR")}
+                  </div>
                 </div>
               </div>
             );
